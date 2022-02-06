@@ -1,0 +1,82 @@
+﻿@model MortgageCalculatorCsharp.Models.Mortgage
+
+
+
+
+<div class="container mt-3">
+    <h1>Loan Calculator</h1>
+    <div class="row row-cols-md-2 mb-3">
+        <div class="col-12">
+            <form class="container form-group shadow py-2" asp-action="Calculator" asp-controller="Mortgage" method="post">
+                <div class="mb-3">
+                    <label for="loanAmount" class="form-label">Loan Amount:</label>
+                    <input type="number" min="1" max="1000000" class="form-control" id="loanAmount" placeholder="Enter Amount" asp-for="LoanAmount" value="@Model?.LoanAmount" autofocus>
+                </div>
+                <div class="mb-3">
+                    <label for="payments" class="form-label">Number of Monthly Payments:</label>
+                    <input type="number" min="1" max="360" class="form-control" id="howManyMonths" placeholder="Number of Months" asp-for="Term" value="@Model?.Term">
+                </div>
+                <div class="mb-3">
+                    <label for="rate" class="form-label">Your Rate:</label>
+                    <input type="number" min="0" max="100" step=".1" class="form-control" id="interestRate" placeholder="Percentage" asp-for="InterestRate" value="@Model?.InterestRate">
+                </div>
+                <div class="d-flex justify-content-end p-2">
+                    <button id="getDebt" class="btn btn-outline-primary" type="submit">SEE DEBT</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 d-flex">
+            <table>
+                <tr>
+                    <td></td>
+                    <th colspan="2" class="d-flex align-items-start"><h1>Your Monthly Payments</h1></th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td id="monthlyPayment" class="d-flex justify-content-end"><h1>@Model?.Payment</h1></td>
+                </tr>
+                <tr>
+                    <td>TOTAL PRINCIPAL</td>
+                    <td id="totalPrincipal" class="ps-5 d-flex justify-content-center">@Model?.LoanAmount</td>
+                </tr>
+                <tr>
+                    <td>TOTAL INTEREST</td>
+                    <td id="totalInterest" class="ps-5 d-flex justify-content-center" type="float">@Model?.TotalInterest</td>
+                </tr>
+                <tr>
+                    <td>TOTAL COST</td>
+                    <td id="totalCost" class="ps-5 d-flex justify-content-center">@Model?.TotalCost</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-striped" id="listData">
+            <thead>
+                <tr class="table-dark">
+                    <th>Month</th>
+                    <th>Payment</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Total Interest</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody id="debtBody">
+                @foreach (var item in Model.MortgageCalculations)
+                {
+                    <tr>
+                        <td>@item.Month</td>
+                        <td>@item.Payment.ToString("C")</td>
+                        <td>@item.MonthlyPrincipal.ToString("C")</td>
+                        <td>@item.MonthlyInterest.ToString("C")</td>
+                        <td>@item.TotalInterest.ToString("C")</td>
+                        <td>@item.Balance.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--  ---------------------------TABLE LIST INFORMATION GOES HERE -------------- -->
+</html>
