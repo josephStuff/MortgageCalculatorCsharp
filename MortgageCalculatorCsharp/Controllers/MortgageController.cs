@@ -26,7 +26,7 @@ namespace MortgageCalculatorCsharp.Controllers
             Mortgage loan = new();
 
             loan.Payment = 0.0m;
-            loan.InterestRate = 3.5m;
+            loan.InterestRate = 3m;
             loan.TotalCost = 0.0m;
             loan.TotalInterest = 0.0m;
             loan.LoanAmount= 15000m;
